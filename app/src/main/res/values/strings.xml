@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">vk-assignment</string>
+
+
+    <!-- Exception message -->
+    <string name="network_exception_message">Unexpected error, please try again</string>
+
+
+    <!-- Strings for ui component -->
+    <string name="retry">Retry</string>
+
+</resources>
