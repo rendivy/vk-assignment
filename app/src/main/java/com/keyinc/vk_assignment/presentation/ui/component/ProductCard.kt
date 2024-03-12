@@ -12,21 +12,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.keyinc.vk_assignment.R
+import com.keyinc.vk_assignment.presentation.ui.theme.SubtitleStyle
+import com.keyinc.vk_assignment.presentation.ui.theme.TitleStyle
+import com.keyinc.vk_assignment.presentation.ui.theme.paddingMedium
+import com.keyinc.vk_assignment.presentation.ui.theme.paddingSmall
 
 
 @Composable
 fun ProductCard(
     imageUrl: String = "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg",
     title: String = "Product Title",
-    description: String = "Product Description"
+    description: String = "Product Description",
+    cardPrice: String,
 ) {
 
-    ElevatedCard(modifier = Modifier.padding(16.dp)) {
+    ElevatedCard(modifier = Modifier.padding(paddingMedium)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -38,26 +44,32 @@ fun ProductCard(
                 model = imageUrl,
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
-                    .padding(start = 8.dp),
+                    .padding(start = paddingSmall),
                 contentScale = ContentScale.Fit,
-                contentDescription = null,
+                contentDescription = stringResource(id = R.string.card_description),
             )
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(paddingMedium),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = title,
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    fontSize = 20.sp,
+                    modifier = Modifier.padding(bottom = paddingMedium),
+                    style = TitleStyle,
                     textAlign = TextAlign.Center
                 )
                 Text(
+                    text = "$cardPrice USD",
+                    modifier = Modifier.padding(bottom = paddingMedium),
+                    style = SubtitleStyle,
+                    textAlign = TextAlign.Center,
+                )
+                Text(
                     text = description,
-                    fontSize = 16.sp,
+                    style = SubtitleStyle,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis
                 )

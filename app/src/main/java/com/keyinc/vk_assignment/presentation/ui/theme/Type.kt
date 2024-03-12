@@ -32,3 +32,20 @@ val Typography = Typography(
     )
     */
 )
+
+
+val TitleStyle = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Bold,
+    fontSize = 20.sp,
+    lineHeight = 24.sp,
+    letterSpacing = 0.15.sp
+)
+
+val SubtitleStyle = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp,
+    lineHeight = 20.sp,
+    letterSpacing = 0.15.sp
+)

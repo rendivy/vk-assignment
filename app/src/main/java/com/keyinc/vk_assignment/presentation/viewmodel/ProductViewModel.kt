@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.keyinc.vk_assignment.data.pagination.PaginatorImpl
 import com.keyinc.vk_assignment.di.IoDispatcher
 import com.keyinc.vk_assignment.domain.usecase.GetProductListUseCase
+import com.keyinc.vk_assignment.presentation.exception.ExceptionEnum
 import com.keyinc.vk_assignment.presentation.ui.state.ProductPaginationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -29,8 +30,8 @@ class ProductViewModel @Inject constructor(
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         _productPaginationState.value = when (exception) {
-            is HttpException -> ProductPaginationState(errorMessage = exception.message)
-            else -> ProductPaginationState(errorMessage = exception.message)
+            is HttpException -> ProductPaginationState(errorMessage = ExceptionEnum.UNEXPECTED_ERROR)
+            else -> ProductPaginationState(errorMessage = ExceptionEnum.UNEXPECTED_ERROR)
         }
     }
 
@@ -52,7 +53,7 @@ class ProductViewModel @Inject constructor(
         },
         onError = {
             _productPaginationState.value =
-                _productPaginationState.value.copy(errorMessage = it?.message)
+                _productPaginationState.value.copy(errorMessage = ExceptionEnum.UNEXPECTED_ERROR)
         },
         onSuccess = { newItems, newPage ->
             _productPaginationState.value = _productPaginationState.value.copy(

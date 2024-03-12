@@ -22,8 +22,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.vk_assignment.R
+import com.keyinc.vk_assignment.presentation.exception.ExceptionEnum
 import com.keyinc.vk_assignment.presentation.ui.component.ProductCard
 import com.keyinc.vk_assignment.presentation.ui.state.ProductPaginationState
+import com.keyinc.vk_assignment.presentation.ui.theme.paddingSmall
 import com.keyinc.vk_assignment.presentation.viewmodel.ProductViewModel
 
 
@@ -33,19 +35,23 @@ fun ProductScreen(productViewModel: ProductViewModel) {
     val productState by productViewModel.productPaginationState.collectAsStateWithLifecycle()
     val scrollState = rememberLazyListState()
 
-
     ProductContent(
         productState = productState,
         productViewModel = productViewModel,
         scrollState = scrollState
     )
 
-
 }
 
 
 @Composable
-fun ProductError(productViewModel: ProductViewModel) {
+fun ProductError(errorType: ExceptionEnum?, productViewModel: ProductViewModel) {
+
+    var errorMessage = when (errorType) {
+        ExceptionEnum.NO_INTERNET -> R.string.network_error
+        else -> R.string.network_exception_message
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -84,6 +90,7 @@ fun ProductContent(
                 imageUrl = product.thumbnail,
                 title = product.title,
                 description = product.description,
+                cardPrice = product.price.toString()
             )
         }
 
@@ -92,7 +99,7 @@ fun ProductContent(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
+                        .padding(paddingSmall),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     CircularProgressIndicator()
@@ -102,7 +109,7 @@ fun ProductContent(
 
         item {
             if (productState.errorMessage != null) {
-                ProductError(productViewModel)
+                ProductError(productState.errorMessage, productViewModel)
             }
         }
     }
